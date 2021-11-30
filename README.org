@@ -5,8 +5,8 @@ https://adventofcode.com/2021
 Folder structure looks like this:
 
 #+BEGIN_SRC text
-  <LANGUAGE>/<USERNAME>/day1
-  <LANGUAGE>/<USERNAME>/day2
-  <LANGUAGE>/<USERNAME>/day3
+  <LANGUAGE>/<USERNAME>/day1/<FILES>
+  <LANGUAGE>/<USERNAME>/day2/<FILES>
+  <LANGUAGE>/<USERNAME>/day3/<FILES>
   ...
 #+END_SRC
