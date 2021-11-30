@@ -1,4 +1,4 @@
-#+TITLE: Solutions for Advent of Core 2021
+#+TITLE: Solutions for Advent of Code 2021
 
 https://adventofcode.com/2021
 
