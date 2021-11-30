@@ -1,0 +1,12 @@
+#+TITLE: Solutions for Advent of Core 2021
+
+https://adventofcode.com/2021
+
+Folder structure looks like this:
+
+#+BEGIN_SRC text
+  <LANGUAGE>/<USERNAME>/day1
+  <LANGUAGE>/<USERNAME>/day2
+  <LANGUAGE>/<USERNAME>/day3
+  ...
+#+END_SRC
