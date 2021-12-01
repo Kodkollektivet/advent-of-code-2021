@@ -1,31 +1,20 @@
 def main():
-    path = ".\--- Day 1 Sonar Sweep ---\input.txt"
+    path = ".\python\David Fagerström\--- Day 1 Sonar Sweep ---\input.txt"
     file = open(path, "r")
     lst = []
-    threemeasurement = increasecount = previousnumber = 0
+    threemeasurement = increasecount = 0
     for line in file:
-        strippedline = line.strip()
-    
-        if int(strippedline) > int(previousnumber):
+
+        if len(lst) and int(line) > int(lst[len(lst)-1]):
             increasecount +=1
-        lst.append(int(strippedline))
-
-        if len(lst) > 3:
-            sumnewlst = sum(lst[len(lst)-3:len(lst)])
-            sumoldlst = sum(lst[len(lst)-4:len(lst)-1])
-
-            if sumnewlst == sumoldlst:
-                pass
-
-            elif sumnewlst > sumoldlst:
-                print(lst[len(lst)-3:len(lst)], lst[len(lst)-4:len(lst)-1])
-                print(sumnewlst, "is larger then", sumoldlst)
+        lst.append(int(line))
+        
+        if len(lst) > 3 and sum(lst[len(lst)-3:len(lst)]) > sum(lst[len(lst)-4:len(lst)-1]):
                 threemeasurement += 1
 
-        previousnumber = strippedline
-
-    print("The numbers incresed", increasecount -1,"times")
+    print("The numbers incresed", increasecount,"times")
     print("Threemeasurement incresed", threemeasurement, "times")
 
 
-main()
+if __name__ == '__main__':
+    main()
