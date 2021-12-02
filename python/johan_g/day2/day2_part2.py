@@ -1,4 +1,4 @@
-#advent of code 2021 day2  part1  Johan g
+#advent of code 2021 day1  part2  Johan g
 import os
 path = "C:\\Users\jocke\OneDrive\Dokument\Knacka_kod\Phyton\Datateknik\\advent_of_code\\advent-of-code-2021\python\johan_g\day2\commands.txt"
 
