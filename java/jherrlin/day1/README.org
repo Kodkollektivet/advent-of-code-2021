@@ -1,0 +1,8 @@
+#+TITLE: How to compile and run
+
+Requires Java 17
+
+#+BEGIN_SRC shell
+  javac problem1.java
+  java problem1
+#+END_SRC
