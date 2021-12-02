@@ -6,3 +6,8 @@ Requires Java 17
   javac problem1.java
   java problem1
 #+END_SRC
+
+* Resources on Streams
+
+  - https://docs.oracle.com/javase/tutorial/collections/streams/reduction.html
+  - https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html

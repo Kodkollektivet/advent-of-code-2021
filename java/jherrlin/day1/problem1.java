@@ -37,28 +37,29 @@ public class problem1 {
 	static Function<Stream<String>, Stream<Integer>> toInt = (s1)
 		-> s1.map(s2 -> Integer.parseInt(s2));
 
-	static Function<Stream<Integer>, Stream<Measurement>> toMeasurement = (numbers) -> {
-		ArrayList<Measurement> arrayList = new ArrayList<>();
-		numbers.forEach(number -> {
-			if (arrayList.isEmpty()) {
-				arrayList.add(new Measurement(number, Direction.first));
-			} else if (arrayList.get(arrayList.size() - 1).depth() < number) {
-				arrayList.add(new Measurement(number, Direction.increased));
-			} else {
-				arrayList.add(new Measurement(number, Direction.decreased));
-			}
-		});
-		return arrayList.stream();
-	};
+	static Function<Stream<Integer>, Stream<Measurement>> toMeasurement = (numbers) ->
+		numbers.collect(
+			() -> new ArrayList<Measurement>(),
+			(coll, e) -> {
+				if (coll.isEmpty()) {
+					coll.add(new Measurement(e, Direction.first));
+				} else if (coll.get(coll.size() - 1).depth() < e) {
+					coll.add(new Measurement(e, Direction.increased));
+				} else {
+					coll.add(new Measurement(e, Direction.decreased));
+				}
+			},
+			(c1, c2) -> c1.addAll(c2))
+			.stream();
 
-	static Function<Stream<Measurement>, Stream<Measurement>> filterIncreased = (measurements) ->
+	static Function<Stream<Measurement>, Stream<Measurement>> increasedMeasurements = (measurements) ->
 		measurements.filter(m -> m.direction() == Direction.increased);
 
 	public static void main(String[] args) {
 		var result = readFile.andThen(splitLines)
 			.andThen(toInt)
 			.andThen(toMeasurement)
-			.andThen(filterIncreased)
+			.andThen(increasedMeasurements)
 			.apply("./input.txt")
 			.count();
 		System.out.println(result);
