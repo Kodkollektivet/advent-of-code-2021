@@ -1,1 +1,0 @@
-/Users/ingmarfalk/projects/rust/training/advent/advent_2021/day_1/target/debug/day_1: /Users/ingmarfalk/projects/rust/training/advent/advent_2021/day_1/src/input.txt /Users/ingmarfalk/projects/rust/training/advent/advent_2021/day_1/src/main.rs
