@@ -37,7 +37,7 @@ public class problem1 {
 	static Function<Stream<String>, Stream<Integer>> toInt = (s1)
 		-> s1.map(s2 -> Integer.parseInt(s2));
 
-	static Function<Stream<Integer>, Stream<Measurement>> findMeasurement = (numbers) -> {
+	static Function<Stream<Integer>, Stream<Measurement>> toMeasurement = (numbers) -> {
 		ArrayList<Measurement> arrayList = new ArrayList<>();
 		numbers.forEach(number -> {
 			if (arrayList.isEmpty()) {
@@ -54,15 +54,11 @@ public class problem1 {
 	static Function<Stream<Measurement>, Stream<Measurement>> filterIncreased = (measurements) ->
 		measurements.filter(m -> m.direction() == Direction.increased);
 
-	static Function<Stream<Measurement>, Stream<Integer>> extractDepths = (measurements) ->
-		measurements.map(m -> m.depth());
-
 	public static void main(String[] args) {
 		var result = readFile.andThen(splitLines)
 			.andThen(toInt)
-			.andThen(findMeasurement)
+			.andThen(toMeasurement)
 			.andThen(filterIncreased)
-			.andThen(extractDepths)
 			.apply("./input.txt")
 			.count();
 		System.out.println(result);
