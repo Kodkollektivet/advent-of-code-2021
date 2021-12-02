@@ -1,4 +1,4 @@
-#advent of code 2021 day1  part2  Johan g
+#advent of code 2021 day2  part2  Johan g
 import os
 path = "C:\\Users\jocke\OneDrive\Dokument\Knacka_kod\Phyton\Datateknik\\advent_of_code\\advent-of-code-2021\python\johan_g\day2\commands.txt"
 
@@ -13,15 +13,18 @@ except IOError as io:
 
 horzP = 0
 depth = 0
+aim = 0
+
 for command in commands:
   direction = int(command[(len(command)-1)])
 
   if "up" in command:
-      depth -= direction
+      aim -= direction
   elif "down" in command:
-      depth += direction
-  elif "forward" in command:
-      horzP += direction        
+      aim += direction
+  else:
+      horzP += direction 
+      depth += (aim*direction)       
 
 
 print(f"Hirozontal position: {horzP}  \nDepth:  {depth}")
