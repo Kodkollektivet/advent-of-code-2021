@@ -59,7 +59,6 @@ def lifesupport():
 
         if len(onelst) >= len(zerolst):
             lst = zerolst
-            invertlst = onelst
             
         else:
             lst = onelst
