@@ -13,5 +13,4 @@ for i in range(len(measurements)):
             output.append('unchanged')
         else:
             output.append('decreased')
-
 print(collections.Counter(output))
