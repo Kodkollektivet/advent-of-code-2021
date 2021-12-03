@@ -38,20 +38,29 @@
 (defn get-column
   "Get column in `diagnostic-vector` from `idx`."
   [idx diagnostic-vector]
-  (map #(nth % idx) diagnostic-vector))
+  (mapv #(nth % idx) diagnostic-vector))
 
 (defn column-is-gamma-or-epsilon
   "Find out if column is `:gamma` or `:epsilon`.
   In:  `[0 0 1 0 0]`
-  Out: `[:epsilon 4]`"
+  Out: `([:gamma 7] [:epsilon 5])`"
   [column]
   (let [gamma-epsilon-frequencies (frequencies column)]
     (->> (set/rename-keys gamma-epsilon-frequencies
                           {0 :epsilon
                            1 :gamma})
          (into [])
-         (sort-by second #(compare %2 %1))
-         (first))))
+         (sort-by second #(compare %2 %1)))))
+
+(defn rotate-vector
+  "Rotate vector.
+  In:  `[[1 2 3] [3 4 5] [6 7 8]]`
+  Out: `[[1 3 6] [2 4 7] [3 5 8]]`"
+  [diagnostic-vector]
+  (let [column-length (count-columns diagnostic-vector)]
+    (->> (range column-length)
+         (mapv (fn [column-idx]
+                 (get-column column-idx diagnostic-vector))))))
 
 (defn gamma-and-epsilons-for-diagnostic-vector
   "Calculate the `:gamma` or `:epsilon` for the `diagnostic-vector`.
@@ -59,16 +68,15 @@
          [0 1 0 1 0]]`
   Out: `(:gamma :epsilon :gamma :gamma :epsilon)`"
   [diagnostic-vector]
-  (let [column-length (count-columns diagnostic-vector)]
-    (->> (range column-length)
-         (map (fn [column-idx]
-                (->> (get-column column-idx diagnostic-vector)
-                     (column-is-gamma-or-epsilon)
-                     (first)))))))
+  (->> diagnostic-vector
+       (rotate-vector)
+       (map (fn [row]
+              (->> row
+                   (column-is-gamma-or-epsilon)
+                   (ffirst))))))
 
-(-> (parse-input test-input)
-    (nth 0)
-    (column-is-gamma-or-epsilon))
+(->> test-input (parse-input)
+     gamma-and-epsilons-for-diagnostic-vector)
 
 (defn gamma-and-epsilons-coll-to-gamma-binary-coll
   "Calculate a binary collection from a `:gamma`/`:epsilon` collection.
