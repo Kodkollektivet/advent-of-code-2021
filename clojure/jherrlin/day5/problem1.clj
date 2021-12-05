@@ -55,6 +55,7 @@
         "")
        (println)))
 
+;; test input
 (->> (slurp "test-input.txt")
      (parse-input)
      (only-consider-horizontal-and-vertical-lines)
@@ -63,9 +64,10 @@
      ;; (debug-print)
      (frequencies)
      (filter (comp #(< 1 %) second))
-     (count)
-     )
+     (count))
+;; => 5
 
+;; real input
 (->> (slurp "input.txt")
      (parse-input)
      (only-consider-horizontal-and-vertical-lines)
@@ -74,5 +76,5 @@
      ;; (debug-print)
      (frequencies)
      (filter (comp #(< 1 %) second))
-     (count)
-     )
+     (count))
+;; => 5576
