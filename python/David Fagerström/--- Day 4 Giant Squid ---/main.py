@@ -3,7 +3,6 @@ from os import path
 import re
 
 def main():
-    
 
     boards = numbers = list()
     path = ".\python\David Fagerström\--- Day 4 Giant Squid ---\input.txt"

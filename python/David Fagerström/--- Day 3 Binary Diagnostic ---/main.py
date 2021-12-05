@@ -103,5 +103,6 @@ def binaryToDecimal(binary):
         i += 1
     return decimal
 
-main()
-lifesupport()
+if __name__ == '__main__':
+    main()
+    lifesupport()
