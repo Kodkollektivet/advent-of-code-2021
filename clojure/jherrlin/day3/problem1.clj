@@ -53,14 +53,11 @@
          (sort-by second #(compare %2 %1)))))
 
 (defn rotate-vector
-  "Rotate vector.
+  "Rotate matrix.
   In:  `[[1 2 3] [3 4 5] [6 7 8]]`
   Out: `[[1 3 6] [2 4 7] [3 5 8]]`"
   [diagnostic-vector]
-  (let [column-length (count-columns diagnostic-vector)]
-    (->> (range column-length)
-         (mapv (fn [column-idx]
-                 (get-column column-idx diagnostic-vector))))))
+  (apply map vector diagnostic-vector))
 
 (defn gamma-and-epsilons-for-diagnostic-vector
   "Calculate the `:gamma` or `:epsilon` for the `diagnostic-vector`.
