@@ -1,6 +1,5 @@
 import re
 import numpy as np
-from numpy.core.fromnumeric import diagonal
 
 def main():
     path = ".\python\David Fagerström\--- Day 5 Hydrothermal Venture ---\input.txt"
