@@ -19,4 +19,3 @@ def main(days):
 if __name__ == '__main__':
     print(main(80))
     print(main(256))
-    print(main(10000000))
