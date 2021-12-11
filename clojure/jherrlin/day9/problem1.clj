@@ -12,35 +12,59 @@
 (defn east-position [x y] [(inc x) y])
 (defn west-position [x y] [(dec x) y])
 
-(defn calc-it [input]
-  (let [position-map (->> input
-                          (str/split-lines)
-                          (map-indexed vector)
-                          (mapv (fn [[line-idx line]] (->> (str/split line #"")
-                                                           (map-indexed vector)
-                                                           (mapv (fn [[column-idx item]]
-                                                                   {:number (str->int item)
-                                                                    :x column-idx
-                                                                    :y line-idx})))))
-                          (apply concat)
-                          (reduce (fn [m {:keys [x y] :as m'}]
-                                    (assoc m [x y] m')) {}))]
-    (->> position-map
-         (map (fn [[k {:keys [number x y] :as m}]]
-                (let [neighbor-positions (map (fn [f]
-                                                (f x y))
-                                              [north-position south-position east-position west-position])
-                      neighbor-values    (map (fn [[x y]]
-                                                (get-neighbor-number [x y] position-map))
-                                              neighbor-positions)]
-                  (assoc m
-                         :neighbor-positions neighbor-positions
-                         :neighbor-values neighbor-values
-                         :smaller-than-neighbors? (every? #(< number %) neighbor-values)))))
-         (filter :smaller-than-neighbors?)
-         (map :number)
-         (map inc)
-         (apply +))))
+(defn parse-input
+  "Takes a string and returns a `position-map`."
+  [input]
+  (->> input
+       (str/split-lines)
+       (map-indexed vector)
+       (mapv (fn [[line-idx line]]
+               (->> (str/split line #"")
+                    (map-indexed vector)
+                    (mapv (fn [[column-idx item]]
+                            {:number (str->int item)
+                             :x column-idx
+                             :y line-idx})))))
+       (apply concat)
+       (reduce (fn [m {:keys [x y] :as m'}]
+                 (assoc m [x y] m')) {})))
 
-(calc-it (slurp "test-input.txt")) ;; => 15
-(calc-it (slurp "input.txt"))      ;; => 508
+(defn find-lowest-points [position-map]
+  (->> position-map
+       (reduce-kv
+        (fn [m k {:keys [number x y] :as m'}]
+          (let [neighbor-positions (map (fn [f]
+                                          (f x y))
+                                        [north-position south-position east-position west-position])
+                neighbor-values    (map (fn [[x y]]
+                                          (get-neighbor-number [x y] position-map))
+                                        neighbor-positions)]
+            (assoc m k
+                   (assoc m'
+                          :neighbor-positions neighbor-positions
+                          :neighbor-values neighbor-values
+                          :smaller-than-neighbors? (every? #(< number %) neighbor-values)))))
+        {})))
+
+(defn calc-it [position-map-with-lowest-points]
+  (->> position-map-with-lowest-points
+       (filter :smaller-than-neighbors?)
+       ;; (map :number)
+       ;; (map inc)
+       ;; (apply +)
+       ))
+
+(->> (slurp "test-input.txt")
+     (parse-input)
+     (find-lowest-points)
+     (vals)
+     (calc-it)
+     )
+;; => 15
+
+(->> (slurp "input.txt")
+     (parse-input)
+     (find-lowest-points)
+     (vals)
+     (calc-it))
+;; => 508
