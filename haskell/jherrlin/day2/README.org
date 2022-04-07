@@ -1,0 +1,14 @@
+
+* How to run
+
+  #+BEGIN_SRC haskell :results output code
+    day2 $ ghci
+    GHCi, version 9.0.1: https://www.haskell.org/ghc/  :? for help
+    ghci> :load day2.hs
+    [1 of 1] Compiling Main             ( day2.hs, interpreted )
+    Ok, one module loaded.
+    ghci> problem1
+    1936494
+    ghci> problem2
+    1997106066
+  #+END_SRC
