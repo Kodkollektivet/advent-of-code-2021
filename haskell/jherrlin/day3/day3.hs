@@ -1,20 +1,20 @@
 import Data.IntMap (IntMap)
 import qualified Data.IntMap as IntMap
-import Data.List (sortBy)
+import Data.List (maximumBy)
 import Data.Function (on)
 
 
 lineToList :: [Char] -> [Int]
 lineToList = map (read . (:""))
 
-toIntMap :: [Int] -> IntMap Int
-toIntMap xs = IntMap.fromListWith (+) [(c, 1) | c <- xs]
+stringToMatrix :: String -> [[Int]]
+stringToMatrix s = map lineToList $ lines s
 
-intMapLookup :: IntMap.Key -> IntMap Int -> Maybe Int
-intMapLookup = IntMap.lookup
+frequencies :: [Int] -> IntMap Int
+frequencies xs = IntMap.fromListWith (+) [(c, 1) | c <- xs]
 
 largesPairInMap :: IntMap Int -> (Int, Int)
-largesPairInMap m = last $ sortBy (compare `on` snd) $ IntMap.toList m
+largesPairInMap m = maximumBy (compare `on` snd) $ IntMap.toList m
 
 binaryPositionValues :: Int -> [Int]
 binaryPositionValues 0 = []
@@ -32,9 +32,9 @@ binaryListInverse = map (\x -> if x == 0 then 1 else 0)
 
 problem1 = do
   content <- readFile "input.txt"
-  let grid        = map lineToList $ lines content
-      columnWidth = (pred . length . head) grid
-      gamma       = map fst [largesPairInMap $ toIntMap $ map (\xs -> xs !! x) grid | x <- [0..columnWidth]]
+  let matrix      = stringToMatrix content
+      columnWidth = (pred . length . head) matrix
+      gamma       = map fst [largesPairInMap $ frequencies $ map (\xs -> xs !! x) matrix | x <- [0..columnWidth]]
       epsilon     = binaryListInverse gamma
       sum         = listWithBinariesToDecimal gamma * listWithBinariesToDecimal epsilon
   print gamma
