@@ -1,0 +1,11 @@
+#+TITLE: Day 4
+
+#+BEGIN_SRC haskell
+  >>> :l day4.hs
+  [1 of 1] Compiling Main             ( day4.hs, interpreted )
+  Ok, one module loaded.
+  >>> problem1
+  4512
+  >>> problem2
+  1924
+#+END_SRC
