@@ -18,7 +18,7 @@ largesPairInMap m = maximumBy (compare `on` snd) $ IntMap.toList m
 
 binaryPositionValues :: Int -> [Int]
 binaryPositionValues 0 = []
-binaryPositionValues n = foldl (\acc _ -> let h = head acc in h*2:acc ) [1] [1..(pred n)]
+binaryPositionValues n = take n $ iterate (2*) 1
 
 listWithBinariesToDecimal :: [Int] -> Int
 listWithBinariesToDecimal [] = 0
@@ -38,7 +38,7 @@ problem1 = do
       gamma       = map fst [largesPairInMap $ frequencies $ map (\xs -> xs !! x) matrix | x <- [0..columnWidth]]
       epsilon     = binaryListInverse gamma
       sum         = listWithBinariesToDecimal gamma * listWithBinariesToDecimal epsilon
-  print gamma
+  print sum
 
 column :: [[Int]] -> Int -> [Int]
 column matrix id = map (\row -> row !! id) matrix
@@ -54,14 +54,12 @@ type Pred = (Int -> Int -> Int)
 
 calculate :: Matrix -> Pred -> Binary -> Idx -> Binary
 calculate [lastRow] p b idx = reverse (drop idx b) ++ lastRow
-calculate   m p b idx =
+calculate m p b idx =
   let zeros      = lookupResult $ IntMap.lookup 0 $ frequencies $ column m idx
       ones       = lookupResult $ IntMap.lookup 1 $ frequencies $ column m idx
       mostCommon = p zeros ones
       newMatrix  = filter (\row -> mostCommon == (row !! idx)) m
-      newIdx     = succ idx
-      binary     = mostCommon:b
-  in calculate newMatrix p binary newIdx
+  in calculate newMatrix p (mostCommon:b) (succ idx)
 
 problem2 = do
   fileContent <- readFile "input.txt"
